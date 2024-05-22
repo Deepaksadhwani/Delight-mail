@@ -7,11 +7,15 @@ import { Provider } from "react-redux";
 import appStore from "./store/appStore";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Login from "./pages/Login";
+import Dummy from "./pages/Dummy";
 
 const appRouter = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    children: [{
+      path: "/", element: <Dummy/>
+    }],
   },
   { path: "/login", element: <Login /> },
 ]);

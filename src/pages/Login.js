@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { checkValidData } from "../utils/validate";
 import { FIREBASE_KEY, USER_SIGN_IN, USER_SIGN_UP } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToken } from "../store/slices/userSlice";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -42,8 +43,13 @@ const Login = () => {
       console.log(data);
       if (!response.ok) {
         setError(data.error.message);
+      } else {
+        toast.success("your account is created.");
+        localStorage.setItem("token", data?.idToken);
+        navigate("/");
+
+        toast.success("your account is created.");
       }
-      dispatch(addToken(data?.idToken));
     } else {
       const response = await fetch(USER_SIGN_IN + FIREBASE_KEY, {
         method: "POST",
@@ -52,15 +58,27 @@ const Login = () => {
           "Content-Type": "application/json",
         },
       });
-      navigate("/");
+
       const data = await response.json();
       console.log(data);
-      dispatch(addToken(data?.idToken));
+
       if (!response.ok) {
         setError(data.error.message);
+      } else {
+        toast.success("Login in successfully");
+        localStorage.setItem("token", data?.idToken);
+        navigate("/");
+        console.log("sign in successful");
       }
     }
   };
+  useEffect(() => {
+    const userToken = localStorage.getItem("token");
+    if (userToken) {
+      dispatch(addToken(userToken));
+      navigate("/");
+    }
+  }, []);
 
   return (
     <div className="relative flex h-screen items-center justify-center bg-gradient-to-br from-pink-800 via-purple-800 to-blue-800 md:items-end ">
@@ -107,9 +125,8 @@ const Login = () => {
       <img
         src="https://img.freepik.com/premium-photo/mail-email-business-communication-concept-with-digital-paper-list-envelope-with-red-notification-alert-symbol-paper-airplane-abstract-dark-background-3d-rendering_670147-31781.jpg"
         alt=""
-        className="absolute -left-5 rounded-full opacity-80 top-40 w-40 md:left-40 md:top-5 md:w-[520px]"
+        className="absolute -left-5 top-40 w-40 rounded-full opacity-80 md:left-40 md:top-5 md:w-[520px]"
       />
-
     </div>
   );
 };
