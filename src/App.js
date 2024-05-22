@@ -1,9 +1,16 @@
 import React from "react";
+import { Toaster } from "react-hot-toast";
+import { Navigate, Outlet } from "react-router-dom";
 
 const App = () => {
-  return (
+   const token = null
+   return !token ? (
+    <Navigate to="/login" />
+  ) : (
     <div>
-      <h1 className="flex">app</h1>
+        <div>app</div>
+      <Toaster/>
+      <Outlet />
     </div>
   );
 };
