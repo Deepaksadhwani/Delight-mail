@@ -48,7 +48,7 @@ const Login = () => {
         localStorage.setItem("token", data?.idToken);
         navigate("/");
 
-        toast.success("your account is created.");
+        
       }
     } else {
       const response = await fetch(USER_SIGN_IN + FIREBASE_KEY, {

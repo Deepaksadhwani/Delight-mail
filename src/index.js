@@ -7,14 +7,14 @@ import { Provider } from "react-redux";
 import appStore from "./store/appStore";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Login from "./pages/Login";
-import Dummy from "./pages/Dummy";
+import MailBox from "./pages/MailBox";
 
 const appRouter = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [{
-      path: "/", element: <Dummy/>
+      path: "/", element: <MailBox/>
     }],
   },
   { path: "/login", element: <Login /> },
