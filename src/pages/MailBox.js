@@ -2,33 +2,56 @@ import React, { useState } from "react";
 import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import Shimmer from "../components/Shimmer";
+import toast from "react-hot-toast";
+import { DATABASE_URL } from "../utils/constants";
+
+const email = localStorage.getItem("email");
 
 const MailBox = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [recipient, setRecipient] = useState("");
   const [subject, setSubject] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const onEditorStateChange = (newState) => {
     setEditorState(newState);
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
+    setLoading(true);
+    const email1 = email.slice(0, -10);
+
     const contentState = editorState.getCurrentContent();
     const rawContentState = convertToRaw(contentState);
     const blocks = rawContentState.blocks;
-    const textContent = blocks.map(block => block.text).join(' ');
-    console.log("Recipient:", recipient);
-    console.log("Subject:", subject);
-    console.log("Email Content:", textContent);
+    const textContent = blocks.map((block) => block.text).join(" ");
+    const data = JSON.stringify({ recipient, subject, textContent });
+    console.log(data)
+    const response = await fetch(`${DATABASE_URL}/mails/${email1}.json`, {
+      method: "POST",
+      body: data,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const responseData = await response.json();
+    if (response.ok) {
+      toast.success("Mail sent successfully");
+    }
+    console.log(responseData);
+    setLoading(false);
   };
 
-  return (
-    <div className="flex flex-col h-screen w-full justify-center items-center  bg-gradient-to-bl from-slate-700 via-gray-400 to-gray-700">
-      <div className="w-full max-w-3xl mx-auto bg-white to-slate-600 rounded-lg shadow-md p-8">
+  return loading ? (
+    <Shimmer />
+  ) : (
+    <div className="flex h-screen w-full flex-col items-center justify-center  bg-gradient-to-bl from-slate-700 via-gray-400 to-gray-700">
+      <div className="mx-auto w-full max-w-3xl rounded-lg bg-white to-slate-600 p-8 shadow-md">
         <div className="mb-4">
           <label
             htmlFor="recipient"
-            className="block text-gray-700 font-bold mb-2"
+            className="mb-2 block font-bold text-gray-700"
           >
             Recipient
           </label>
@@ -38,13 +61,13 @@ const MailBox = () => {
             placeholder="Recipient Email"
             value={recipient}
             onChange={(e) => setRecipient(e.target.value)}
-            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 focus:outline-none"
           />
         </div>
         <div className="mb-4">
           <label
             htmlFor="subject"
-            className="block text-gray-700 font-bold mb-2"
+            className="mb-2 block font-bold text-gray-700"
           >
             Subject
           </label>
@@ -54,7 +77,7 @@ const MailBox = () => {
             placeholder="Subject"
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
-            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 focus:outline-none"
           />
         </div>
         <div className="mb-4">
@@ -68,7 +91,7 @@ const MailBox = () => {
         </div>
         <button
           onClick={handleSend}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
         >
           Send
         </button>

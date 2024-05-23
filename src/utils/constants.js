@@ -3,3 +3,4 @@ export const USER_SIGN_UP =
   "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=";
 export const USER_SIGN_IN =
   "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=";
+export const DATABASE_URL = "https://deepak-mailbox-client-default-rtdb.firebaseio.com";

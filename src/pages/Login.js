@@ -5,8 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToken } from "../store/slices/userSlice";
 import toast from "react-hot-toast";
+import Shimmer from "../components/Shimmer";
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const name = useRef(null);
   const email = useRef(null);
@@ -31,6 +33,7 @@ const Login = () => {
       password: passwordValue,
       returnSecureToken: true,
     });
+    setLoading(true);
     if (!isSign) {
       const response = await fetch(USER_SIGN_UP + FIREBASE_KEY, {
         method: "POST",
@@ -43,12 +46,14 @@ const Login = () => {
       console.log(data);
       if (!response.ok) {
         setError(data.error.message);
+        setLoading(false);
       } else {
-        toast.success("your account is created.");
+       
         localStorage.setItem("token", data?.idToken);
+        localStorage.setItem("email", emailValue);
+        setLoading(false);
         navigate("/");
-
-        
+        toast.success("your account is created.");
       }
     } else {
       const response = await fetch(USER_SIGN_IN + FIREBASE_KEY, {
@@ -64,10 +69,15 @@ const Login = () => {
 
       if (!response.ok) {
         setError(data.error.message);
+        setLoading(false);
       } else {
         toast.success("Login in successfully");
         localStorage.setItem("token", data?.idToken);
+        localStorage.setItem("email", emailValue);
+
         navigate("/");
+        setLoading(false);
+
         console.log("sign in successful");
       }
     }
@@ -80,7 +90,9 @@ const Login = () => {
     }
   }, []);
 
-  return (
+  return loading ? (
+    <Shimmer />
+  ) : (
     <div className="relative flex h-screen items-center justify-center bg-gradient-to-br from-pink-800 via-purple-800 to-blue-800 md:items-end ">
       <div className="flex w-[90%]  flex-col  items-center space-y-3 rounded-md border-2 bg-gray-100 py-20 shadow-lg  md:mb-[5%] md:ml-[35%]  md:w-[20%] md:py-14">
         <h1 className="font-Mont mb-10 text-3xl font-semibold text-blue-500  md:mb-0 ">

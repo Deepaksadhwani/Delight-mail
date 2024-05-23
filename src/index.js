@@ -8,6 +8,7 @@ import appStore from "./store/appStore";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Login from "./pages/Login";
 import MailBox from "./pages/MailBox";
+import { Toaster } from "react-hot-toast";
 
 const appRouter = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={appStore}>
     <RouterProvider router={appRouter} />
+    <Toaster/>
   </Provider>,
 );
 

@@ -1,7 +1,7 @@
 import React from "react";
-import { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
+import Navbar from "./components/NaveBar";
 
 const App = () => {
   const token = useSelector((store) => store.user.token);
@@ -10,8 +10,8 @@ const App = () => {
     <Navigate to="/login" />
   ) : (
     <div>
+      <Navbar/>
      
-      <Toaster />
       <Outlet />
     </div>
   );
