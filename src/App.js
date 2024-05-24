@@ -11,7 +11,6 @@ const App = () => {
   ) : (
     <div>
       <Navbar/>
-     
       <Outlet />
     </div>
   );

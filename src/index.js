@@ -9,14 +9,22 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Login from "./pages/Login";
 import MailBox from "./pages/MailBox";
 import { Toaster } from "react-hot-toast";
+import Inbox from "./pages/Inbox";
 
 const appRouter = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    children: [{
-      path: "/", element: <MailBox/>
-    }],
+    children: [
+      {
+        path: "/",
+        element: <MailBox />,
+      },
+      {
+        path: "/inbox",
+        element: <Inbox />,
+      }
+    ],
   },
   { path: "/login", element: <Login /> },
 ]);
@@ -25,7 +33,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={appStore}>
     <RouterProvider router={appRouter} />
-    <Toaster/>
+    <Toaster />
   </Provider>,
 );
 

@@ -17,10 +17,9 @@ const MailBox = () => {
   const onEditorStateChange = (newState) => {
     setEditorState(newState);
   };
-
   const handleSend = async () => {
     setLoading(true);
-    const email1 = email.slice(0, -10);
+    const email1 = recipient.slice(0, -10);
 
     const contentState = editorState.getCurrentContent();
     const rawContentState = convertToRaw(contentState);
