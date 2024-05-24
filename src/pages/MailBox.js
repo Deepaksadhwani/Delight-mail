@@ -6,7 +6,6 @@ import Shimmer from "../components/Shimmer";
 import toast from "react-hot-toast";
 import { DATABASE_URL } from "../utils/constants";
 
-const email = localStorage.getItem("email");
 
 const MailBox = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
