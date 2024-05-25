@@ -22,7 +22,7 @@ const Inbox = () => {
                 subject={inboxData[key].subject}
                 text={inboxData[key].textContent}
                 className="mb-4 rounded-lg bg-white shadow-lg"
-                
+                id={key}
               />
             </Link>
           ))

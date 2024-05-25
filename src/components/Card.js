@@ -1,11 +1,23 @@
-import React from "react";
+import { useDispatch } from "react-redux";
+import { DATABASE_URL } from "../utils/constants";
+import Shimmer from "./Shimmer";
+import { deleteMail } from "../store/slices/mailSlice";
 
-const Card = ({ recipient, subject, text }) => {
-  return (
-    <div className="bg-white rounded-lg shadow-md my-4 p-6 hover:scale-105 transition-all hover:bg-green-50 duration-300">
+const Card = ({ recipient, subject, text, id }) => {
+  const dispatch = useDispatch();
+  const deleteMailHandler = async (event) => {
+    event.preventDefault();
+   
+    await dispatch(deleteMail({ mailId: id, recipient }));
+  };
+
+  return null ? (
+    <Shimmer />
+  ) : (
+    <div className="my-4 rounded-lg bg-white p-6 shadow-md transition-all duration-300 hover:scale-105 hover:bg-green-50">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
-          <div className="rounded-full bg-gray-300 h-12 w-12 flex items-center justify-center mr-4">
+          <div className="mr-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-300">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6 text-gray-600"
@@ -23,10 +35,13 @@ const Card = ({ recipient, subject, text }) => {
           </div>
           <div>
             <h3 className="text-lg font-semibold text-gray-800">{recipient}</h3>
-            <p className="text-green-600 font-bold">{subject}</p>
+            <p className="font-bold text-green-600">{subject}</p>
           </div>
         </div>
-        <div className="text-gray-600">
+        <button
+          onClick={deleteMailHandler}
+          className="cursor-pointer text-red-400 hover:scale-110 "
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -38,10 +53,10 @@ const Card = ({ recipient, subject, text }) => {
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth={2}
-              d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
             />
           </svg>
-        </div>
+        </button>
       </div>
       <div className="mt-4">
         <p className="text-gray-700">{text}</p>

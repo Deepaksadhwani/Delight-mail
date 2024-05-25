@@ -36,6 +36,9 @@ const MailBox = () => {
     const responseData = await response.json();
     if (response.ok) {
       toast.success("Mail sent successfully");
+      setEditorState(EditorState.createEmpty())
+      setRecipient("")
+      setSubject("")
     }
     console.log(responseData);
     setLoading(false);
