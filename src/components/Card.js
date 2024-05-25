@@ -2,7 +2,7 @@ import React from "react";
 
 const Card = ({ recipient, subject, text }) => {
   return (
-    <div className="bg-white rounded-lg shadow-md my-4 p-6">
+    <div className="bg-white rounded-lg shadow-md my-4 p-6 hover:scale-105 transition-all hover:bg-green-50 duration-300">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <div className="rounded-full bg-gray-300 h-12 w-12 flex items-center justify-center mr-4">

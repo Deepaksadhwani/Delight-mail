@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import MailBox from "./pages/MailBox";
 import { Toaster } from "react-hot-toast";
 import Inbox from "./pages/Inbox";
+import MailPage from "./pages/MailPage";
 
 const appRouter = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/inbox",
         element: <Inbox />,
+      },
+      {
+        path: "/inbox/:mailId",
+        element: <MailPage/>
       }
     ],
   },
