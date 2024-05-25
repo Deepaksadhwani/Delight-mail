@@ -15,13 +15,14 @@ const Inbox = () => {
       <div className="w-full max-w-4xl">
         {inboxData && Object.keys(inboxData).length > 0 ? (
           Object.keys(inboxData).map((key) => (
-            <Link to={`/inbox/${key}`} className="hover:scale-105 transition-all">
+            <Link to={`/inbox/${key}`}  className="hover:scale-105 transition-all">
               <Card
                 key={key}
                 recipient={inboxData[key].recipient}
                 subject={inboxData[key].subject}
                 text={inboxData[key].textContent}
                 className="mb-4 rounded-lg bg-white shadow-lg"
+                
               />
             </Link>
           ))
