@@ -1,14 +1,15 @@
 import { useDispatch } from "react-redux";
 import { DATABASE_URL } from "../utils/constants";
 import Shimmer from "./Shimmer";
-import { deleteMail } from "../store/slices/mailSlice";
+import { deleteMail, deleteSentMail } from "../store/slices/mailSlice";
 
 const Card = ({ recipient, subject, text, id }) => {
   const dispatch = useDispatch();
   const deleteMailHandler = async (event) => {
     event.preventDefault();
-   
+
     await dispatch(deleteMail({ mailId: id, recipient }));
+    await dispatch(deleteSentMail({ mailId: id, recipient }));
   };
 
   return null ? (

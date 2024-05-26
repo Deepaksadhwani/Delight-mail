@@ -6,7 +6,6 @@ import Shimmer from "../components/Shimmer";
 import toast from "react-hot-toast";
 import { DATABASE_URL } from "../utils/constants";
 
-
 const MailBox = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [recipient, setRecipient] = useState("");
@@ -17,6 +16,7 @@ const MailBox = () => {
     setEditorState(newState);
   };
   const handleSend = async () => {
+   
     setLoading(true);
     const email1 = recipient.slice(0, -10);
 
@@ -25,7 +25,7 @@ const MailBox = () => {
     const blocks = rawContentState.blocks;
     const textContent = blocks.map((block) => block.text).join(" ");
     const data = JSON.stringify({ recipient, subject, textContent });
-    console.log(data)
+    console.log(data);
     const response = await fetch(`${DATABASE_URL}/mails/${email1}.json`, {
       method: "POST",
       body: data,
@@ -34,13 +34,26 @@ const MailBox = () => {
       },
     });
     const responseData = await response.json();
-    if (response.ok) {
-      toast.success("Mail sent successfully");
-      setEditorState(EditorState.createEmpty())
-      setRecipient("")
-      setSubject("")
-    }
+  
     console.log(responseData);
+
+    const responseFromSentMail = await fetch(
+      `${DATABASE_URL}/sent/${email1}.json`,
+      {
+        method: "POST",
+        body: data,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    ); 
+    if (responseFromSentMail.ok) {
+      toast.success("Mail sent successfully");
+      setEditorState(EditorState.createEmpty());
+      setRecipient("");
+      setSubject("");
+      setLoading(false);
+    }
     setLoading(false);
   };
 
