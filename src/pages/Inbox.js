@@ -31,7 +31,7 @@ const Inbox = () => {
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className={ !switchTab ?"text-black h-6 w-6" : "text-white h-6 w-6"}
+            className={!switchTab ? "h-6 w-6 text-black" : "h-6 w-6 text-white"}
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -43,7 +43,7 @@ const Inbox = () => {
               d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
             />
           </svg>
-          <h1 className="text-2xl t font-bold ">Sent</h1>
+          <h1 className="t text-2xl font-bold ">Sent</h1>
         </div>
         <div
           onClick={() => switchTabHandler(false)}
@@ -53,7 +53,7 @@ const Inbox = () => {
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className={ switchTab ?"text-black h-6 w-6" : "text-white h-6 w-6"}
+            className={switchTab ? "h-6 w-6 text-black" : "h-6 w-6 text-white"}
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -76,14 +76,15 @@ const Inbox = () => {
               <Link
                 to={`/inbox/${key}`}
                 className="transition-all hover:scale-105"
+                key={key}
               >
                 <Card
-                  key={key}
                   recipient={sentData[key].recipient}
                   subject={sentData[key].subject}
                   text={sentData[key].textContent}
                   className="mb-4 rounded-lg bg-white shadow-lg"
                   id={key}
+                  sender={sentData[key].sender}
                 />
               </Link>
             ))
@@ -101,14 +102,15 @@ const Inbox = () => {
               <Link
                 to={`/inbox/${key}`}
                 className="transition-all hover:scale-105"
+                key={key}
               >
                 <Card
-                  key={key}
                   recipient={inboxData[key].recipient}
                   subject={inboxData[key].subject}
                   text={inboxData[key].textContent}
                   className="mb-4 rounded-lg bg-white shadow-lg"
                   id={key}
+                  sender={inboxData[key].sender}
                 />
               </Link>
             ))
