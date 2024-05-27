@@ -9,6 +9,8 @@ const Inbox = () => {
   const inboxData = useSelector((store) => store.mail.data);
   const sentData = useSelector((store) => store.mail.sentData);
   const isLoading = useSelector((store) => store.mail.isLoading);
+  
+
   const tabClass =
     "flex cursor-pointer items-center bg-green-500 py-1 px-2 rounded-lg transition-all duration-300 hover:hover hover:bg-green-600 text-white space-x-2";
   const switchTabHandler = (tab) => {
@@ -43,7 +45,7 @@ const Inbox = () => {
               d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
             />
           </svg>
-          <h1 className="t text-2xl font-bold ">Sent</h1>
+          <h1 className="text-2xl font-bold ">Sent</h1>
         </div>
         <div
           onClick={() => switchTabHandler(false)}

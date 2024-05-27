@@ -25,7 +25,6 @@ const Login = () => {
     const emailValue = email.current.value;
     const passwordValue = password.current.value;
     const message = checkValidData(nameValue, emailValue, passwordValue);
-    console.log(message);
     setError(message);
     if (message) return;
     const postRequestData = JSON.stringify({
@@ -43,7 +42,6 @@ const Login = () => {
         },
       });
       const data = await response.json();
-      console.log(data);
       if (!response.ok) {
         setError(data.error.message);
         setLoading(false);
@@ -65,8 +63,6 @@ const Login = () => {
       });
 
       const data = await response.json();
-      console.log(data);
-
       if (!response.ok) {
         setError(data.error.message);
         setLoading(false);
@@ -77,8 +73,6 @@ const Login = () => {
 
         navigate("/");
         setLoading(false);
-
-        console.log("sign in successful");
       }
     }
   };

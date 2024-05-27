@@ -5,7 +5,6 @@ import Navbar from "./components/NaveBar";
 
 const App = () => {
   const token = useSelector((store) => store.user.token);
-  console.log(token);
   return !token ? (
     <Navigate to="/login" />
   ) : (

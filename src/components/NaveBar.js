@@ -26,7 +26,7 @@ const Navbar = () => {
     }, 700);
   };
 
-  const loadDataHandler = () => {
+  const loadDataHandler = async () => {
     dispatch(fetchInboxData());
     dispatch(fetchSentMailData());
   };

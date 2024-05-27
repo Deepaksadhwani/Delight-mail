@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { DATABASE_URL } from "../../utils/constants";
 
+
 export const fetchInboxData = createAsyncThunk("fetchMails", async () => {
   const emailData = localStorage.getItem("email");
-  const email1 = emailData.slice(0, -10);
+const email1 = emailData.slice(0, -10);
   const response = await fetch(`${DATABASE_URL}/mails/${email1}.json`);
   return response.json();
 });
@@ -17,8 +18,8 @@ export const fetchSentMailData = createAsyncThunk("fetchSentMail", async () => {
 
 export const deleteSentMail = createAsyncThunk(
   "deleteSentMail",
-  async ({ mailId, recipient }) => {
-    const email = recipient.slice(0, -10);
+  async ({ mailId, sender }) => {
+    const email = sender.slice(0, -10);
     const response = await fetch(
       `${DATABASE_URL}/sent/${email}/${mailId}.json`,
       {
@@ -88,7 +89,6 @@ const mailSlice = createSlice({
       state.sentData = action.payload;
     });
     builder.addCase(fetchSentMailData.rejected, (state, action) => {
-      console.log("Error", action.payload);
       state.isError = true;
     });
     builder.addCase(fetchInboxData.pending, (state, action) => {
@@ -99,7 +99,6 @@ const mailSlice = createSlice({
       state.data = action.payload;
     });
     builder.addCase(fetchInboxData.rejected, (state, action) => {
-      console.log("Error", action.payload);
       state.isError = true;
     });
     builder.addCase(deleteMail.pending, (state, action) => {
@@ -112,7 +111,6 @@ const mailSlice = createSlice({
       state.data = updatedData;
     });
     builder.addCase(deleteMail.rejected, (state, action) => {
-      console.log("Error deleting mail", action.payload);
       state.isError = true;
       state.isLoading = false;
     });
@@ -126,7 +124,6 @@ const mailSlice = createSlice({
       state.sentData = updatedData;
     });
     builder.addCase(deleteSentMail.rejected, (state, action) => {
-      console.log("Error deleting mail", action.payload);
       state.isError = true;
       state.isLoading = false;
     });

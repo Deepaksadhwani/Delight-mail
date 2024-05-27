@@ -1,15 +1,14 @@
 import { useDispatch } from "react-redux";
-import { DATABASE_URL } from "../utils/constants";
 import Shimmer from "./Shimmer";
 import { deleteMail, deleteSentMail } from "../store/slices/mailSlice";
 
-const Card = ({ recipient, subject, text, id }) => {
+const Card = ({ recipient, subject, text, id, sender }) => {
   const dispatch = useDispatch();
   const deleteMailHandler = async (event) => {
     event.preventDefault();
 
     await dispatch(deleteMail({ mailId: id, recipient }));
-    await dispatch(deleteSentMail({ mailId: id, recipient }));
+    await dispatch(deleteSentMail({ mailId: id, sender }));
   };
 
   return null ? (
@@ -35,8 +34,9 @@ const Card = ({ recipient, subject, text, id }) => {
             </svg>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-gray-800">{recipient}</h3>
-            <p className="font-bold text-green-600">{subject}</p>
+            <h3 className="text-lg font-semibold text-gray-800">To: {recipient}</h3>
+            <h3 className="text-sm font-semibold text-gray-500">From: {sender}</h3>
+            <p className="font-bold text-green-600 ">{subject}</p>
           </div>
         </div>
         <button
@@ -59,7 +59,7 @@ const Card = ({ recipient, subject, text, id }) => {
           </svg>
         </button>
       </div>
-      <div className="mt-4">
+      <div className="mt-2 font-semibold text-gray-800">
         <p className="text-gray-700">{text}</p>
       </div>
     </div>

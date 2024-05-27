@@ -11,21 +11,21 @@ const MailBox = () => {
   const [recipient, setRecipient] = useState("");
   const [subject, setSubject] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const email = localStorage.getItem("email");
+  const emailSliced = email.slice(0, -10);
+  const [sender, setSender] = useState(email);
   const onEditorStateChange = (newState) => {
     setEditorState(newState);
   };
   const handleSend = async () => {
-   
     setLoading(true);
     const email1 = recipient.slice(0, -10);
-
     const contentState = editorState.getCurrentContent();
     const rawContentState = convertToRaw(contentState);
     const blocks = rawContentState.blocks;
     const textContent = blocks.map((block) => block.text).join(" ");
-    const data = JSON.stringify({ recipient, subject, textContent });
-    console.log(data);
+    const data = JSON.stringify({ sender, recipient, subject, textContent });
+    
     const response = await fetch(`${DATABASE_URL}/mails/${email1}.json`, {
       method: "POST",
       body: data,
@@ -33,20 +33,22 @@ const MailBox = () => {
         "Content-Type": "application/json",
       },
     });
-    const responseData = await response.json();
-  
-    console.log(responseData);
 
     const responseFromSentMail = await fetch(
-      `${DATABASE_URL}/sent/${email1}.json`,
+      `${DATABASE_URL}/sent/${emailSliced}.json`,
       {
         method: "POST",
-        body: data,
+        body: JSON.stringify({
+          sender,
+          recipient,
+          subject,
+          textContent,
+        }),
         headers: {
           "Content-Type": "application/json",
         },
       },
-    ); 
+    );
     if (responseFromSentMail.ok) {
       toast.success("Mail sent successfully");
       setEditorState(EditorState.createEmpty());
