@@ -1,11 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { DATABASE_URL } from "../../utils/constants";
 
-
 export const fetchInboxData = createAsyncThunk("fetchMails", async () => {
   const emailData = localStorage.getItem("email");
-const email1 = emailData.slice(0, -10);
-  const response = await fetch(`${DATABASE_URL}/mails/${email1}.json`);
+  const emailSliced = emailData.slice(0, -10);
+  const response = await fetch(`${DATABASE_URL}/mails/${emailSliced}.json`);
   return response.json();
 });
 

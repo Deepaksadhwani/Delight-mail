@@ -19,14 +19,14 @@ const MailBox = () => {
   };
   const handleSend = async () => {
     setLoading(true);
-    const email1 = recipient.slice(0, -10);
+    const recipientId = recipient.slice(0, -10);
     const contentState = editorState.getCurrentContent();
     const rawContentState = convertToRaw(contentState);
     const blocks = rawContentState.blocks;
     const textContent = blocks.map((block) => block.text).join(" ");
     const data = JSON.stringify({ sender, recipient, subject, textContent });
     
-    const response = await fetch(`${DATABASE_URL}/mails/${email1}.json`, {
+    const response = await fetch(`${DATABASE_URL}/mails/${recipientId}.json`, {
       method: "POST",
       body: data,
       headers: {

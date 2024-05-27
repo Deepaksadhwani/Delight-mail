@@ -98,7 +98,7 @@ const Inbox = () => {
         </div>
       ) : (
         <div className="w-full max-w-4xl">
-          {" "}
+         
           {inboxData && Object.keys(inboxData).length > 0 ? (
             Object.keys(inboxData).map((key) => (
               <Link
