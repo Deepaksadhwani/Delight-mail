@@ -9,7 +9,6 @@ const Inbox = () => {
   const inboxData = useSelector((store) => store.mail.data);
   const sentData = useSelector((store) => store.mail.sentData);
   const isLoading = useSelector((store) => store.mail.isLoading);
-  
 
   const tabClass =
     "flex cursor-pointer items-center bg-green-500 py-1 px-2 rounded-lg transition-all duration-300 hover:hover hover:bg-green-600 text-white space-x-2";
@@ -21,19 +20,25 @@ const Inbox = () => {
     <Shimmer />
   ) : (
     <div className="flex min-h-screen flex-col items-center bg-gray-100">
-      <h1 className="my-8 bg-gradient-to-r from-red-400 via-orange-400 to-red-400 bg-clip-text text-4xl font-bold text-transparent">
+      <h1 className="my-8 bg-gradient-to-r from-red-400 via-orange-400 to-red-400 bg-clip-text text-3xl font-bold text-transparent md:text-4xl">
         Delight Mail
       </h1>
-      <div className="mb-4 flex w-full items-center   justify-evenly space-x-60 px-4 md:w-[50%]">
+      <div className="mb-4 flex w-full flex-col items-center justify-evenly space-y-4 px-4 md:flex-row md:space-x-60 md:space-y-0 md:w-[50%]">
         <div
           onClick={() => switchTabHandler(true)}
           className={
-            switchTab ? tabClass : "flex cursor-pointer items-center space-x-2"
+            switchTab
+              ? tabClass
+              : "flex cursor-pointer items-center space-x-2 md:space-x-4"
           }
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className={!switchTab ? "h-6 w-6 text-black" : "h-6 w-6 text-white"}
+            className={
+              !switchTab
+                ? "h-6 w-6 text-black md:h-8 md:w-8"
+                : "h-6 w-6 text-white md:h-8 md:w-8"
+            }
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -45,17 +50,23 @@ const Inbox = () => {
               d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
             />
           </svg>
-          <h1 className="text-2xl font-bold ">Sent</h1>
+          <h1 className="text-xl font-bold md:text-2xl">Sent</h1>
         </div>
         <div
           onClick={() => switchTabHandler(false)}
           className={
-            !switchTab ? tabClass : "flex cursor-pointer items-center space-x-2"
+            !switchTab
+              ? tabClass
+              : "flex cursor-pointer items-center space-x-2 md:space-x-4"
           }
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className={switchTab ? "h-6 w-6 text-black" : "h-6 w-6 text-white"}
+            className={
+              switchTab
+                ? "h-6 w-6 text-black md:h-8 md:w-8"
+                : "h-6 w-6 text-white md:h-8 md:w-8"
+            }
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -67,12 +78,12 @@ const Inbox = () => {
               d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
             />
           </svg>
-          <h1 className="text-2xl font-bold">Inbox</h1>
+          <h1 className="text-xl font-bold md:text-2xl">Inbox</h1>
         </div>
       </div>
 
       {switchTab ? (
-        <div className="w-full max-w-4xl">
+        <div className="w-full max-w-4xl px-4">
           {sentData && Object.keys(sentData).length > 0 ? (
             Object.keys(sentData).map((key) => (
               <Link
@@ -97,8 +108,7 @@ const Inbox = () => {
           )}
         </div>
       ) : (
-        <div className="w-full max-w-4xl">
-         
+        <div className="w-full max-w-4xl px-4">
           {inboxData && Object.keys(inboxData).length > 0 ? (
             Object.keys(inboxData).map((key) => (
               <Link

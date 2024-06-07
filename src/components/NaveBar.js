@@ -36,38 +36,40 @@ const Navbar = () => {
   ) : (
     <nav className="bg-gray-800">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          <Link to="/">
-            <div className="flex items-center space-x-2">
-              <img
-                src="https://cdn4.iconfinder.com/data/icons/social-media-logos-6/512/112-gmail_email_mail-512.png"
-                alt=""
-                className="w-11"
-              />
-              <div className="flex-shrink-0">
-                <span className="text-xl font-bold text-white">
-                  Delight Mail
-                </span>
+        <div className="flex items-center justify-between py-3 md:py-5">
+          <div className="flex items-center">
+            <Link to="/">
+              <div className="flex items-center space-x-2">
+                <img
+                  src="https://cdn4.iconfinder.com/data/icons/social-media-logos-6/512/112-gmail_email_mail-512.png"
+                  alt=""
+                  className="w-8 md:w-11"
+                />
+                <div className="flex-shrink-0">
+                  <span className="text-lg font-bold hidden sm:block text-white sm:text-xl">
+                    Delight Mail
+                  </span>
+                </div>
               </div>
-            </div>
-          </Link>
+            </Link>
+          </div>
 
-          <div>
+          <div className="flex items-center md:ml-4">
             <Link
               to="/"
-              className="rounded px-4 py-2 font-bold text-white hover:bg-gray-700"
+              className="mr-2 rounded px-3 py-2 font-bold text-white hover:bg-gray-700 md:px-4"
             >
               Home
             </Link>
             <button
               onClick={loadDataHandler}
-              className="rounded px-4 py-2 font-bold text-white hover:bg-gray-700"
+              className="mr-2 rounded px-3 py-2 font-bold text-white hover:bg-gray-700 md:px-4"
             >
               <Link to="/inbox">Inbox</Link>
             </button>
             <button
               onClick={logoutHandler}
-              className="rounded px-4 py-2 font-bold text-white hover:bg-gray-700"
+              className="rounded px-3 py-2 font-bold text-white hover:bg-gray-700 md:px-4"
             >
               Logout
             </button>
